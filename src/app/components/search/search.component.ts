@@ -1,25 +1,20 @@
 import { Component, inject } from '@angular/core';
 import { Firestore, collection, collectionData, addDoc, deleteDoc, doc, updateDoc, documentId } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { Item } from './item.model';
-import { RouterOutlet } from '@angular/router';
-import { FirestoreService } from './services/firestore.service';
-import { CommonModule} from '@angular/common';
+import { Item } from '../../item.model';
+import { FirestoreService } from '../../services/firestore.service';
+import { CommonModule, NgFor, NgForOf } from '@angular/common';
 import { FormsModule } from "@angular/forms";
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
-
 
 declare var bootstrap: any; // Ensure Bootstrap modal functions work
 
 @Component({
-  selector: 'app-root',
-  imports: [FormsModule, CommonModule, RouterOutlet, HeaderComponent, FooterComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+  selector: 'app-search',
+  imports: [FormsModule, CommonModule, NgFor, NgForOf],
+  templateUrl: './search.component.html',
+  styleUrl: './search.component.css'
 })
-export class AppComponent {
-  /* 
+export class SearchComponent {
   //new code starts here
   public englishWord = '';
   public teluguWord = '';
@@ -113,51 +108,5 @@ export class AppComponent {
       item.word.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
-
   //new code ends here
-   */
-
-  /* 
-  //old code
-  items$: Observable<any[]>; // Observable of items
-  selectedItem: any = null;
-
-  constructor(private firestoreService: FirestoreService) {}
-
-  ngOnInit() {
-    this.fetchItems();
-  }
-
-  fetchItems() {
-    this.items$ = this.firestoreService.getItems(); // Fetch latest data
-  }
-
-  openUpdateModal(item: any) {
-    this.selectedItem = { ...item }; // Copy the selected item
-  }
-
-  updateItem() {
-    if (this.selectedItem) {
-      this.firestoreService.updateItem(this.selectedItem.id, {
-        word: this.selectedItem.word,
-        meaning: this.selectedItem.meaning
-      }).then(() => {
-        this.fetchItems(); // Refresh list after update
-      });
-    }
-  }
-
-  openDeleteModal(item: any) {
-    this.selectedItem = item;
-  }
-
-  deleteItem() {
-    if (this.selectedItem) {
-      this.firestoreService.deleteItem(this.selectedItem.id).then(() => {
-        this.fetchItems(); // Refresh list after delete
-      });
-    }
-  } 
-  ////old code ends here 
-  */
 }

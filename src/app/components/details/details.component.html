@@ -1,0 +1,11 @@
+<div class="container mt-5">
+    <h2 class="my-5">Selected Dictionary Word Details</h2>
+    <p class="mb-5" *ngIf="wordId; else noId">
+        <!-- Word ID: <strong>{{ wordId }}</strong><br /> -->
+        Word : <strong class="text-danger">{{ selectedItem.word }}</strong><br />
+        Meaning : <strong class="text-danger">{{ selectedItem.meaning }}</strong>
+    </p>
+    <ng-template #noId><p>No word ID found!</p></ng-template>
+    <a routerLink="/home" (click)="goHome()" class="btn btn-success mt-3">Go Home</a>
+    <!-- <p>{{selectedItem | json}}</p> -->
+  </div>
