@@ -1,6 +1,6 @@
 <div class="container-fluid my-3">
     <div class="row d-flex justify-content-center">
-        <div class="col-lg-6 col-md-8 col-sm-12">
+        <div class="col-lg-6 col-md-8 col-sm-12 mt-3">
             <h3>Add Word</h3>
             <div class="card">
                 <div class="card-body">
@@ -26,9 +26,7 @@
                     </form>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-6 col-md-8 col-sm-12 mt-3 mb-3">
-            <table class="table table-striped olistTable">
+            <table class="table table-striped olistTable mt-5">
                 <thead class="table-dark">
                     <tr>
                         <th>Word</th>
@@ -38,7 +36,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of items$ | async; let i = index">
-                        <td class="letter-spacing-2px" width="33%">{{item.word}}</td>
+                        <td class="letter-spacing-2px word" width="33%">{{item.word}}</td>
                         <td class="noto-sans-telugu-td" width="33%">{{item.meaning}}</td>
                         <td class="noto-sans-telugu-td" width="33%">
                             <button class="btn btn-warning btn-sm me-2" data-bs-toggle="modal"

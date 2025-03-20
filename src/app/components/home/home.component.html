@@ -11,7 +11,8 @@
         <div class="col-12 mb-3">
           <button class="btn btn-success" type="button" (click)="filterItems()">Search</button>
         </div>
-        <div class="col-12" *ngIf="searchTerm">
+        <div class="col-12" *ngIf="searchTerm || paginatedItemsList.length > 0">
+          <!-- {{paginatedItemsList | json}} -->
           <table class="table table-striped olistTable">
             <thead class="table-dark">
               <tr>
@@ -21,7 +22,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let item of paginatedItemsList; let i = index">
-                <td class="letter-spacing-2px" width="50%"><a class="btn btn-link mx-1"
+                <td class="letter-spacing-2px word" width="50%"><a class="btn btn-link mx-1"
                     (click)="viewDetails(item.id)">{{item.word}}</a></td>
                 <td class="noto-sans-telugu-td" width="50%">{{item.meaning}}</td>
               </tr>
@@ -30,7 +31,7 @@
         </div>
         <div class="col-12 mt-5">
           <!-- Pagination Controls -->
-           {{totalPages()}}
+           <!-- {{paginatedItemsList.length}} -->
           <nav *ngIf="totalPages() > 1">
             <ul class="pagination justify-content-center">
               <li class="page-item" [class.disabled]="currentPage === 1">

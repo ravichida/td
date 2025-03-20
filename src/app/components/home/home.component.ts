@@ -46,6 +46,8 @@ export class HomeComponent {
   
     ngOnInit() {
       this.fetchItems();
+      console.log("ngOnInit paginatedItemsList", this.paginatedItemsList.length);
+      console.log("ngOnInit this.filteredItems", this.filteredItems.length);
     }
   
     fetchItems() {
@@ -54,6 +56,7 @@ export class HomeComponent {
         this.items = data;
         console.log(data);
         this.filterItems();
+        this.paginatedItems() // Update paginated items
       })
 
       // pagination code starts here
@@ -63,7 +66,7 @@ export class HomeComponent {
       this.currentPage = 1; // Reset to first page after filtering */
 
     this.filteredItems = [...this.items]; // Initialize with all items
-    this.paginatedItems(); // Load paginated data
+    this.filterItems()
 
       // pagination code ends here
     }
@@ -74,13 +77,16 @@ export class HomeComponent {
         item.word.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
       this.currentPage = 1; // Reset to first page
-      this.paginatedItems();
     }
   
     paginatedItems() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
+      console.log("start", start);
+      console.log("end", end);
+      console.log("this.filteredItems", this.filteredItems);
       this.paginatedItemsList = this.filteredItems.slice(start, end);
+      console.log("paginatedItemsList", this.paginatedItemsList);
     }
   
     changePage(page: number) {

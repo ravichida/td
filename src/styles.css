@@ -54,3 +54,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .text-success {
     color: rgb(26 188 156) !important;
 }
+
+.word{
+    text-transform: capitalize;
+}
