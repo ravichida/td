@@ -5,14 +5,18 @@ import { Item } from '../../item.model';
 import { FirestoreService } from '../../services/firestore.service';
 import { CommonModule, NgFor, NgForOf } from '@angular/common';
 import { FormsModule } from "@angular/forms";
+import { CustomSortPipe } from '../../pipes/custom-sort.pipe';
 
+//Paginator imports starts here
+//Paginator imports ends here
 declare var bootstrap: any; // Ensure Bootstrap modal functions work
 
 @Component({
   selector: 'app-search',
-  imports: [FormsModule, CommonModule, NgFor, NgForOf],
   templateUrl: './search.component.html',
-  styleUrl: './search.component.css'
+  styleUrl: './search.component.css',
+  imports: [FormsModule, CommonModule, NgFor, NgForOf],
+  standalone: true,
 })
 export class SearchComponent {
   //new code starts here
@@ -28,18 +32,22 @@ export class SearchComponent {
   public searchTerm: string = '';
   public filteredItems: Item[] = [];
   public status: boolean = false;
+  public sortedItems: Item[] = [];
+  public sortOrder: boolean = false;
 
-  constructor(private firestore: Firestore) {
-    const itemsCollection = collection(this.firestore, 'dictionary');
-    this.items$ = collectionData(itemsCollection, { idField: 'id' }) as Observable<Item[]>;
+
+  constructor(private firestore: Firestore, private fs: FirestoreService) {
+    // const itemsCollection = collection(this.firestore, 'dictionary');
+    // this.items$ = collectionData(itemsCollection, { idField: 'id' }) as Observable<Item[]>;
+    this.items$ = this.fs.getItems();
   }
-
+  
   ngOnInit() {
     this.fetchItems();
   }
 
   fetchItems() {
-    this.items$ = this.firestoreService.getItems(); // Fetch latest data
+    this.items$ = this.fs.getItems(); // Fetch latest data
     this.items$.subscribe(data => {
       this.items = data;
       this.filterItems();
@@ -107,6 +115,13 @@ export class SearchComponent {
     this.filteredItems = this.items.filter(item =>
       item.word.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
+    this.sortedItems = new CustomSortPipe().transform(this.filteredItems, 'word', this.sortOrder ? 'desc' : 'asc');
+    console.log(this.sortedItems);
+  }
+
+  toggleSortOrder() {
+    this.sortOrder = !this.sortOrder;
+    this.filterItems();
   }
   //new code ends here
 }

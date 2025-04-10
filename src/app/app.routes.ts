@@ -5,6 +5,9 @@ import { AddComponent } from './components/add/add.component';
 import { SearchComponent } from './components/search/search.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { DetailsComponent } from './components/details/details.component';
+import { SearchresultsComponent } from './components/searchresults/searchresults.component';
+import { IndexComponent } from './components/index/index.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -12,5 +15,8 @@ export const routes: Routes = [
     { path: 'add', component: AddComponent },
     { path: 'search', component: SearchComponent },
     { path: 'details/:wordId', component: DetailsComponent },
+    { path: 'sr', component: SearchresultsComponent },
+    { path: 'index', component: IndexComponent },
+    { path: 'pagination', component: PaginationComponent },
     { path: '**', component:  NotFoundComponent}
 ];

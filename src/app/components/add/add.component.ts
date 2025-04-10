@@ -28,6 +28,8 @@ public selectedItem: Item = { id: '', word: '', meaning: '' };
 public searchTerm: string = '';
 public filteredItems: Item[] = [];
 public status: boolean = false;
+public addedItemId: string = "";
+public addedItem: Item[] = [];
 
 constructor(private firestore: Firestore) {
   const itemsCollection = collection(this.firestore, 'dictionary');
@@ -52,12 +54,37 @@ addItem() {
   } else {
     this.displayAddError = "";
     const itemsCollection = collection(this.firestore, 'dictionary');
-    addDoc(itemsCollection, { word: this.englishWord, meaning: this.teluguWord });
+    addDoc(itemsCollection, { word: this.englishWord, meaning: this.teluguWord }).then(docRef => {
+      console.log('Document added with ID:', docRef.id);
+      this.addedItemId = docRef.id;
+      this.getItem(docRef.id);
+      this.fetchItems();
+      this.firestoreService.getItems()
+      this.addedItem = this.items.filter(item => item.id === this.addedItemId);
+    });;
     this.englishWord = '';
     this.teluguWord = '';
-    this.fetchItems();
+    
+    // this.addedItem = this.items.filter(item => item.id === this.addedItemId);
+    
   }
 }
+
+getItem(id: string) {
+  this.firestoreService.getItemById(id).subscribe(data => {
+    console.log("getItem", data);
+    // console.log('Added Item:', this.addedItem);
+
+  })}
+  // this.firestore.getItemById.id.subscribe(doc => {
+  /* this.firestore.collection('dictionary').doc(id).get().subscribe(doc => {
+    if (doc.exists) {
+      const item = doc.data();
+      console.log('Item found:', item);
+    } else {
+      console.log('No such document!');
+    }
+  }); */
 
 openUpdateModal(item: Item) {
   this.selectedItem = { ...item };
@@ -68,6 +95,9 @@ updateItem() {
     const itemDocRef = doc(this.firestore, 'dictionary', this.selectedItem.id);
     updateDoc(itemDocRef, { id: this.selectedItem.id, word: this.selectedItem.word, meaning: this.selectedItem.meaning }).then(() => {
       // this.fetchItems();
+      this.fetchItems();
+      this.firestoreService.getItems()
+      this.addedItem = this.items.filter(item => item.id === this.addedItemId);
       this.closeModal('updateModal');
     });
   }
@@ -82,6 +112,8 @@ deleteItem() {
     const itemDocRef = doc(this.firestore, 'dictionary', this.selectedItem.id);
     deleteDoc(itemDocRef).then(() => {
       this.fetchItems();
+      this.firestoreService.getItems()
+      this.addedItem = this.items.filter(item => item.id === this.addedItemId);
       this.closeModal('deleteModal');
     });
   }

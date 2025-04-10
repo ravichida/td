@@ -1,30 +1,30 @@
 <div class="container-fluid my-3">
-    <div class="row d-flex justify-content-center">
+    <div class="row d-flex justify-content-center mt-3 mb-3">
         <div class="col-lg-6 col-md-8 col-sm-12">
             <h3>Search</h3>
             <div class="row mt-3 mb-3">
-                <div class="col-12 mb-3">
-                    <label for="searchWord">Search Word</label>
-                    <input id="searchWord" name="searchWord" type="text" class="form-control w-50"
+                <div class="col-8 mb-3">
+                    <label for="searchWord" class="text-success">Search Word</label>
+                    <input id="searchWord" name="searchWord" type="text" class="form-control"
                         placeholder="Search word..." [(ngModel)]="searchTerm" (input)="filterItems()">
                 </div>
-                <div class="col-12 mb-3">
+                <div class="col-4 mb-3 pt-4">
                     <button class="btn btn-success" type="button" (click)="filterItems()">Search</button>
                 </div>
-                <div class="col-12" *ngIf="searchTerm">
-                    <table class="table table-striped olistTable">
+                <div class="col-12 mt-4" *ngIf="searchTerm">
+                    <table class="table table-striped olistTable" id="searchTable">
                         <thead class="table-dark">
                             <tr>
-                                <th>Word</th>
-                                <th>Meaning</th>
-                                <th>Actions</th>
+                                <th><a class="btn btn-success" (click)="toggleSortOrder()">Word</a></th>
+                                <th><a href="javascript:void(0)" class="btn btn-success">Meaning</a></th>
+                                <th><a href="javascript:void(0)" class="btn btn-success">Actions</a></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of filteredItems; let i = index">
+                            <tr *ngFor="let item of sortedItems; let i = index">
                                 <td class="letter-spacing-2px word" width="33%">{{item.word}}</td>
-                                <td class="noto-sans-telugu-td" width="33%">{{item.meaning}}</td>
-                                <td class="noto-sans-telugu-td" width="33%">
+                                <td class="noto-sans-telugu-td align-self-cente" width="33%">{{item.meaning}}</td>
+                                <td class="noto-sans-telugu-td align-self-cente" width="33%">
                                     <button class="btn btn-warning btn-sm me-2" data-bs-toggle="modal"
                                         data-bs-target="#updateModal" (click)="openUpdateModal(item)"><i
                                             class="fas fa-edit"></i> Update</button>

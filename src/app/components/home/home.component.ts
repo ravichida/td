@@ -7,6 +7,7 @@ import { CommonModule, NgFor, NgForOf } from '@angular/common';
 import { FormsModule } from "@angular/forms";
 
 import { Router, RouterLink } from '@angular/router';
+import { CustomSortPipe } from '../../pipes/custom-sort.pipe';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +22,8 @@ export class HomeComponent {
     public items$: Observable<Item[]>;
     public selectedItem: Item = { id: '', word: '', meaning: '' };
     // public filteredItems: Item[] = []; // without pagination
+    public sortedItems: Item[] = [];
+    public sortOrder: boolean = false;
     
     // pagination
     items: any[] = []; // Full dictionary data
@@ -30,6 +33,7 @@ export class HomeComponent {
     currentPage:number = 1;
     itemsPerPage: number = 5;
     // filteredItems = [...this.items]; // Initialize with all items
+
   
     constructor(private firestore: Firestore, private router: Router) {
       const itemsCollection = collection(this.firestore, 'dictionary');
@@ -65,7 +69,8 @@ export class HomeComponent {
       );
       this.currentPage = 1; // Reset to first page after filtering */
 
-    this.filteredItems = [...this.items]; // Initialize with all items
+    // this.filteredItems = [...this.items]; // Initialize with all items
+    this.filteredItems = []; // Initialize with all items
     this.filterItems()
 
       // pagination code ends here
@@ -76,7 +81,14 @@ export class HomeComponent {
       this.filteredItems = this.items.filter(item =>
         item.word.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
+      this.sortedItems = new CustomSortPipe().transform(this.filteredItems, 'word', this.sortOrder ? 'desc' : 'asc');
+          console.log(this.sortedItems);
       this.currentPage = 1; // Reset to first page
+    }
+
+    toggleSortOrder() {
+      this.sortOrder = !this.sortOrder;
+      this.filterItems();
     }
   
     paginatedItems() {

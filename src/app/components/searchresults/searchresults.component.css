@@ -1,0 +1,70 @@
+/* table {
+    width: 100%;
+  }
+  
+  th.mat-sort-header-sorted {
+    color: black;
+  } */
+
+  /* Light cyan background for the entire table */
+  .mat-mdc-table {
+    background-color: #e0f7fa !important; /* Light Cyan */
+    /* background-color: #e0f7fa; Light Cyan */
+  }
+  
+  /* Table Header - Slightly darker cyan */
+  /* .mat-mdc-table .mat-header-row { */
+  .mat-mdc-table .mat-mdc-header-row {
+    /* background-color: #00acc1 !important; Cyan */
+    background-color: #91E4D3 !important; /* Cyan */
+    color: rgb(0, 0, 0) !important;
+    font-weight: bold !important;
+  }
+  .mat-mdc-table .mat-mdc-row {
+    color: rgb(0, 0, 0) !important;
+  }
+  
+  /* Alternate row colors */
+  /* .mat-mdc-table .mat-mdc-row .mat-row:nth-child(even) { */
+  .mat-mdc-table .mat-mdc-row:nth-child(even) {
+    background-color: #91E4D3 !important; /* Lighter Cyan */
+  }
+  
+  /* .mat-mdc-table .mat-mdc-row .mat-row:nth-child(odd) { */
+  .mat-mdc-table .mat-mdc-row:nth-child(odd) {
+    /* background-color: #e0f7fa !important; Lightest Cyan */
+    background-color: #ffffff !important; /* White */
+  }
+  
+  /* Hover effect */
+  .mat-mdc-table .mat-row:hover {
+    background-color: #80deea !important; /* Brighter Cyan */
+  }
+  
+  /* Paginator style (if needed) */
+  .mat-mdc-table .mat-paginator {
+    background-color: #e0f7fa !important;
+  }
+
+  .mat-mdc-table .mat-mdc-header-cell{
+      border-bottom-width: 0px !important;
+    }
+.mat-mdc-table .mat-mdc-header-cell{
+    width: 50%;
+}
+
+  .mat-mdc-table .mat-mdc-cell {
+    border-bottom-width: 0px !important;
+  }
+
+  /* .mat-mdc-paginator .mat-mdc-paginator-outer-container{ */
+  .mat-mdc-paginator{
+    background-color: #1ABC9C !important; /* Cyan */
+    color: white;
+  }
+
+  
+  
+
+
+  

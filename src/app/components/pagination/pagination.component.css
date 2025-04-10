@@ -1,0 +1,4 @@
+
+li.page-item::selection {
+    background: none;
+  }
