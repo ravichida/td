@@ -1,1 +1,48 @@
-<p>index works!</p>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="alphabet-index">
+                <button *ngFor="let letter of alphabetList" class="btn btn-outline-primary m-1"
+                    (click)="filterByLetter(letter)">
+                    {{ letter }}
+                </button>
+            </div>
+        </div>
+        <div class="col-12 mt-3">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th width="50%">Word</th>
+                        <th width="50%">Meaning</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of items">
+                        <td>{{ item.word }}</td>
+                        <td>{{ item.meaning }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-12 mt-3">
+            <!-- Bootstrap Pagination -->
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" [class.disabled]="!hasPreviousPage">
+                        <button class="page-link" (click)="loadData(false)" [disabled]="!hasPreviousPage">
+                            Previous
+                        </button>
+                    </li>
+                    <li class="page-item disabled">
+                        <a class="page-link">{{ currentPage }}</a>
+                    </li>
+                    <li class="page-item" [class.disabled]="!hasNextPage">
+                        <button class="page-link" (click)="loadData(true)" [disabled]="!hasNextPage">
+                            Next
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

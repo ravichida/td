@@ -49,12 +49,14 @@ fetchItems() {
 }
 
 addItem() {
+  let Word = this.englishWord.toUpperCase();
+  console.log("Word", Word);
   if (this.englishWord === "" || this.teluguWord === "") {
     this.displayAddError = "Please Enter English Word and Telugu Word";
   } else {
     this.displayAddError = "";
     const itemsCollection = collection(this.firestore, 'dictionary');
-    addDoc(itemsCollection, { word: this.englishWord, meaning: this.teluguWord }).then(docRef => {
+    addDoc(itemsCollection, { word: this.englishWord.toUpperCase(), meaning: this.teluguWord }).then(docRef => {
       console.log('Document added with ID:', docRef.id);
       this.addedItemId = docRef.id;
       this.getItem(docRef.id);
@@ -93,7 +95,7 @@ openUpdateModal(item: Item) {
 updateItem() {
   if (this.selectedItem.id) {
     const itemDocRef = doc(this.firestore, 'dictionary', this.selectedItem.id);
-    updateDoc(itemDocRef, { id: this.selectedItem.id, word: this.selectedItem.word, meaning: this.selectedItem.meaning }).then(() => {
+    updateDoc(itemDocRef, { id: this.selectedItem.id, word: this.selectedItem.word.toUpperCase(), meaning: this.selectedItem.meaning }).then(() => {
       // this.fetchItems();
       this.fetchItems();
       this.firestoreService.getItems()

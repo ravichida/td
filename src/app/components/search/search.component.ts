@@ -74,7 +74,7 @@ export class SearchComponent {
   updateItem() {
     if (this.selectedItem.id) {
       const itemDocRef = doc(this.firestore, 'dictionary', this.selectedItem.id);
-      updateDoc(itemDocRef, { id: this.selectedItem.id, word: this.selectedItem.word, meaning: this.selectedItem.meaning }).then(() => {
+      updateDoc(itemDocRef, { id: this.selectedItem.id, word: this.selectedItem.word.toUpperCase(), meaning: this.selectedItem.meaning }).then(() => {
         // this.fetchItems();
         this.closeModal('updateModal');
       });
