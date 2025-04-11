@@ -1,14 +1,3 @@
-/* import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-index',
-  imports: [],
-  templateUrl: './index.component.html',
-  styleUrl: './index.component.css'
-})
-export class IndexComponent {
-
-} */
 import { CommonModule, NgFor } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { Firestore, collection, query, orderBy, limit, startAfter, startAt, where, getDocs, DocumentData, QueryDocumentSnapshot } from '@angular/fire/firestore';
