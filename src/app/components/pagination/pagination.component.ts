@@ -6,7 +6,7 @@ import { Firestore, collection, query, orderBy, limit, startAfter, startAt, getD
   selector: 'app-pagination',
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css'],
-  imports: [NgFor], // Add any other components or modules you need to import here
+  imports: [NgFor, CommonModule], // Add any other components or modules you need to import here
   standalone: true // Set to true if this component is standalone
 })
 

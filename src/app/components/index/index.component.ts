@@ -6,7 +6,7 @@ import { Firestore, collection, query, orderBy, limit, startAfter, startAt, wher
   selector: 'app-index',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.css'],
-  imports: [NgFor], // Add any other components or modules you need to import here
+  imports: [NgFor, CommonModule], // Add any other components or modules you need to import here
   standalone: true // Set to true if this component is standalone
 })
 export class IndexComponent implements OnInit {

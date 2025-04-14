@@ -38,7 +38,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let item of addedItem; let i = index">
-                            <td class="letter-spacing-2px word" width="33%">{{item.word}}</td>
+                            <td class="letter-spacing-2px word" width="33%">{{item.word | titlecase}}</td>
                             <td class="noto-sans-telugu-td" width="33%">{{item.meaning}}</td>
                             <td class="noto-sans-telugu-td" width="33%">
                                 <button class="btn btn-warning btn-sm me-2" data-bs-toggle="modal"

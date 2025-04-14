@@ -22,7 +22,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of sortedItems; let i = index">
-                                <td class="letter-spacing-2px word" width="33%">{{item.word}}</td>
+                                <td class="letter-spacing-2px word" width="33%">{{item.word | titlecase}}</td>
                                 <td class="noto-sans-telugu-td align-self-cente" width="33%">{{item.meaning}}</td>
                                 <td class="noto-sans-telugu-td align-self-cente" width="33%">
                                     <button class="btn btn-warning btn-sm me-2" data-bs-toggle="modal"
@@ -52,7 +52,9 @@
                 <div class="row">
                     <div class="col-12">
                         <label for="word">Word</label>
-                        <input type="text" class="form-control" name="word" id="word" [(ngModel)]="selectedItem.word"
+                        <input type="text" class="form-control text-capitalize" name="word" id="word" 
+                        [(ngModel)]="selectedItem.word" 
+                            (input)="selectedItem.word = convertToTitleCase(selectedItem.word)"
                             placeholder="Enter new word" />
                     </div>
                     <div class="col-12">
@@ -83,7 +85,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-12 my-2">
-                        <p>Are you sure you want to delete <span class="text-danger">{{ selectedItem.word }} </span></p>
+                        <p>Are you sure you want to delete <span class="text-danger">{{ convertToTitleCase(selectedItem.word) }} </span></p>
                     </div>
                 </div>
                 <div class="row">
@@ -97,7 +99,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="letter-spacing-2px" width="33%">{{selectedItem.word}}</td>
+                                    <td class="letter-spacing-2px" width="33%">{{selectedItem.word | titlecase }}</td>
                                     <td class="noto-sans-telugu-td" width="33%">{{selectedItem.meaning}}</td>
                                 </tr>
                             </tbody>

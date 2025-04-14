@@ -68,7 +68,8 @@ export class SearchComponent {
   }
 
   openUpdateModal(item: Item) {
-    this.selectedItem = { ...item };
+    this.selectedItem = { ...item }; // Convert word to title case
+    this.selectedItem.word = this.convertToTitleCase(item.word); // Convert meaning to title case
   }
 
   updateItem() {
@@ -122,6 +123,12 @@ export class SearchComponent {
   toggleSortOrder() {
     this.sortOrder = !this.sortOrder;
     this.filterItems();
+  }
+
+  convertToTitleCase(value: string): string {
+    return value.replace(/\w\S*/g, (txt) =>
+      txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase()
+    );
   }
   //new code ends here
 }
