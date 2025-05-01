@@ -3,13 +3,13 @@
     <div class="col-lg-6 col-md-8 col-sm-12">
       <h3>Search</h3>
       <div class="row">
-        <div class="col-8 mb-5">
+        <div class="col-8 mb-3">
           <label for="searchWord" class="text-success">Search Word</label>
           <!-- <input id="searchWord" name="searchWord" type="text" class="form-control" [(ngModel)]="searchWord" /> -->
           <input id="searchWord" name="searchWord" type="text" class="form-control" placeholder="Search word..."
             [(ngModel)]="searchTerm" (input)="filterItems()">
         </div>
-        <div class="col-4 mb-5 pt-4 d-flex justify-content-start">
+        <div class="col-4 mb-4 pt-4 d-flex justify-content-start">
           <button class="btn btn-success" type="button" (click)="filterItems()">Search</button>
         </div>
         <div class="col-12" *ngIf="searchTerm || paginatedItemsList.length > 0">

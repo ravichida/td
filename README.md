@@ -1,4 +1,6 @@
-# Td
+# Add & Search Components used firestore Service
+
+# Td : Telugu Dictionary using Firebase
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.1.
 

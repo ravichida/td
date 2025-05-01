@@ -7,6 +7,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { MaterialModule } from './material.module';
 import { routes } from './app.routes';
 import { environment } from '../environments/environment';
+import { FormsModule } from '@angular/forms';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,6 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideFirestore(() => getFirestore()),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     MaterialModule,
-    HeaderComponent
+    HeaderComponent,
+    FormsModule
   ]
 };

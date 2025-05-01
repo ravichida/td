@@ -1,6 +1,27 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, addDoc, query, docSnapshots, collectionData, doc, docData, deleteDoc, updateDoc, orderBy, limit, startAfter, getDocs } from '@angular/fire/firestore';
+// import { Firestore, collection, query, collectionData, doc, deleteDoc, updateDoc, orderBy, limit, startAfter, getDoc, getDocs, where } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+
+import {
+  Firestore,
+  collection,
+  collectionData,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  deleteDoc,
+  updateDoc,
+  query,
+  where,
+  orderBy,
+  limit,
+  startAfter
+} from '@angular/fire/firestore';
+import { docData } from '@angular/fire/firestore';
+import { CollectionReference, collection as colRef, DocumentData } from 'firebase/firestore';
+import { addDoc } from 'firebase/firestore';
+import { firstValueFrom } from 'rxjs';
 
 export interface DictionaryItem {
   id?: string;
@@ -13,17 +34,29 @@ export interface DictionaryItem {
 })
 export class FirestoreService {
 
-  private collectionName = 'dictionary';
+  firestore: Firestore;
+  collectionRef: CollectionReference<DocumentData>;
+  collectionName = 'dictionary'; // Define the collection name here
 
-  private firestore = inject(Firestore);
-  private collectionRef = collection(this.firestore, 'dictionary');
+  constructor() {
+    this.firestore = inject(Firestore);
+    this.collectionRef = collection(this.firestore, 'dictionary'); // ✅ Safe to use here
+  }
+
+
+  // private collectionName = 'dictionary';
+
+  // private firestore = inject(Firestore);
+  // private firestore: Firestore = inject(Firestore);
+
+  // private collectionRef = collection(this.firestore, this.collectionName);
 
   async getPaginatedItems(pageSize: number, lastVisibleItem: any = null): Promise<DictionaryItem[]> {
-    let collectionRef = collection(this.firestore, this.collectionName);
-    let q = query(collectionRef, orderBy('word'), limit(pageSize));
+    // let collectionRef = collection(this.firestore, this.collectionName);
+    let q = query(this.collectionRef, orderBy('word'), limit(pageSize));
 
     if (lastVisibleItem) {
-      q = query(collectionRef, orderBy('word'), startAfter(lastVisibleItem), limit(pageSize));
+      q = query(this.collectionRef, orderBy('word'), startAfter(lastVisibleItem), limit(pageSize));
     }
 
     const querySnapshot = await getDocs(q);
@@ -31,12 +64,22 @@ export class FirestoreService {
   }
 
   getDictionaryItems(): Observable<DictionaryItem[]> {
+    const colRef = collection(this.firestore, 'dictionary');
     return collectionData(this.collectionRef, { idField: 'id' }) as Observable<DictionaryItem[]>;
   }
 
   // Get a single item by ID
-  
 
+  getItemByWord(word: string): Promise<any[]> {
+    const colRef = collection(this.firestore, 'dictionary');
+    const q = query(this.collectionRef, where('word', '==', word.toUpperCase()));
+    return getDocs(q).then(snapshot => {
+      return snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+    });
+  }
 
   getItemById(id: string) {
     const docRef = doc(this.firestore, 'dictionary', id);
@@ -46,12 +89,25 @@ export class FirestoreService {
 
   // Get all items
   getItems(): Observable<any[]> {
+    // const collectionRef = collection(this.firestore, 'dictionary');
     return collectionData(this.collectionRef, { idField: 'id' });
   }
 
-  // Add a new item
-  async addItem(item: any) {
-    await addDoc(this.collectionRef, item);
+    /* getItems(): Promise<any[]> {
+      const collectionRef = collection(this.firestore, 'dictionary');
+      return getDocs(collectionRef).then(snapshot =>
+        snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+      );
+    } */
+
+  addItemToFirestore(item: any): Promise<any> {
+    const colRef = collection(this.firestore, 'dictionary');
+    return addDoc(this.collectionRef, item).then(docRef => {
+      return getDoc(docRef).then(snapshot => ({
+        id: docRef.id,
+        ...snapshot.data()
+      }));
+    });
   }
 
   // Delete an item
@@ -59,9 +115,28 @@ export class FirestoreService {
     await deleteDoc(doc(this.firestore, `items/${id}`));
   }
 
-  // Update an existing item
-  async updateItem(id: string, updatedData: any) {
-    const docRef = doc(this.firestore, `items/${id}`);
-    await updateDoc(docRef, updatedData);
+  deleteItemById(id: string): Promise<void> {
+    const docRef = doc(this.firestore, 'dictionary', id);
+    return deleteDoc(docRef);
   }
+
+  // Update an existing item
+  updateItemAndFetch(id: string, data: any): Promise<any> {
+    const docRef = doc(this.firestore, 'dictionary', id);
+    return updateDoc(docRef, data).then(() => {
+      return getDoc(docRef).then(snapshot => ({
+        id: snapshot.id,
+        ...snapshot.data()
+      }));
+    });
+  }
+
+  getAllItems(): Promise<any[]> {
+    // const colRef = collection(this.firestore, 'dictionary');
+    return getDocs(this.collectionRef).then(snapshot =>
+      snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+    );
+  }
+
+
 }
